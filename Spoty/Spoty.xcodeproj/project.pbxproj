@@ -10,7 +10,6 @@
 		828759E31E5620D7003B34FD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 828759E21E5620D7003B34FD /* main.m */; };
 		828759E61E5620D7003B34FD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 828759E51E5620D7003B34FD /* AppDelegate.m */; };
 		828759F11E5620D7003B34FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 828759F01E5620D7003B34FD /* Assets.xcassets */; };
-		828759F41E5620D7003B34FD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 828759F21E5620D7003B34FD /* LaunchScreen.storyboard */; };
 		828759FE1E5627CD003B34FD /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 828759FC1E5627CD003B34FD /* HomeViewController.m */; };
 		828759FF1E5627CD003B34FD /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 828759FD1E5627CD003B34FD /* HomeViewController.xib */; };
 		82875A031E562886003B34FD /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82875A011E562886003B34FD /* SearchViewController.m */; };
@@ -26,7 +25,6 @@
 		828759E41E5620D7003B34FD /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		828759E51E5620D7003B34FD /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		828759F01E5620D7003B34FD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		828759F31E5620D7003B34FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		828759F51E5620D7003B34FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		828759FB1E5627CD003B34FD /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		828759FC1E5627CD003B34FD /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
@@ -74,7 +72,6 @@
 				828759E41E5620D7003B34FD /* AppDelegate.h */,
 				828759E51E5620D7003B34FD /* AppDelegate.m */,
 				828759F01E5620D7003B34FD /* Assets.xcassets */,
-				828759F21E5620D7003B34FD /* LaunchScreen.storyboard */,
 				828759F51E5620D7003B34FD /* Info.plist */,
 				828759E11E5620D7003B34FD /* Supporting Files */,
 				828759FB1E5627CD003B34FD /* HomeViewController.h */,
@@ -158,7 +155,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				828759F41E5620D7003B34FD /* LaunchScreen.storyboard in Resources */,
 				828759F11E5620D7003B34FD /* Assets.xcassets in Resources */,
 				82875A041E562886003B34FD /* SearchViewController.xib in Resources */,
 				82875A0C1E56430E003B34FD /* WebViewController.xib in Resources */,
@@ -183,17 +179,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		828759F21E5620D7003B34FD /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				828759F31E5620D7003B34FD /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		828759F61E5620D7003B34FD /* Debug */ = {
