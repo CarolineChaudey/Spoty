@@ -29,21 +29,6 @@
     CGRect screenRect = [UIScreen mainScreen].bounds;
     self.window = [[UIWindow alloc] initWithFrame:screenRect];
     
-    // on prepare les "vues" du menu
-    HomeViewController *homeCtrl = [HomeViewController new];
-    SearchViewController *searchCtrl = [SearchViewController new];
-    DeconnexionViewController *decoCtrl = [DeconnexionViewController new];
-    
-    // on créé le menu et on le remplit avec les "vues"
-    self.menuCtrl = [[UITabBarController alloc] init];
-    self.menuCtrl.viewControllers = [NSArray arrayWithObjects:homeCtrl , searchCtrl, decoCtrl, nil];
-    
-    // customization des items de la tab bar
-    [[self.menuCtrl.tabBar items] objectAtIndex:0].title = @"Home";
-    [[self.menuCtrl.tabBar items] objectAtIndex:1].title = @"Search";
-    [[self.menuCtrl.tabBar items] objectAtIndex:2].title = @"Quit";
-    
-    
     // création de la requête de demande de token
     NSURL *authURL = [NSURL URLWithString:@"https://accounts.spotify.com/authorize?client_id=830c60285d82492dab749e02b5864c5e&response_type=code&redirect_uri=spoty://oauth/callback"];
     NSURLRequest *request = [NSURLRequest requestWithURL:authURL];
@@ -62,6 +47,20 @@
 
 -(void)spotifyConnection {
     
+    // on prepare les "vues" du menu
+    HomeViewController *homeCtrl = [HomeViewController new];
+    SearchViewController *searchCtrl = [SearchViewController new];
+    DeconnexionViewController *decoCtrl = [DeconnexionViewController new];
+    
+    // on créé le menu et on le remplit avec les "vues"
+    self.menuCtrl = [[UITabBarController alloc] init];
+    self.menuCtrl.viewControllers = [NSArray arrayWithObjects:homeCtrl , searchCtrl, decoCtrl, nil];
+    
+    // customization des items de la tab bar
+    [[self.menuCtrl.tabBar items] objectAtIndex:0].title = @"Home";
+    [[self.menuCtrl.tabBar items] objectAtIndex:1].title = @"Search";
+    [[self.menuCtrl.tabBar items] objectAtIndex:2].title = @"Quit";
+    
     [self.oauthView setDelegate:self.wvc];
     [self.wvc.view addSubview:self.oauthView];
     self.window.rootViewController = self.wvc;
@@ -74,6 +73,7 @@
     NSLog(@"On accede a l'application.");
     [self.oauthView removeFromSuperview];
     self.window.rootViewController = self.menuCtrl;
+    [self.menuCtrl setSelectedIndex:0];
     
     return YES;
 }
