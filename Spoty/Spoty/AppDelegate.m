@@ -11,6 +11,7 @@
 #import "SearchViewController.h"
 #import "ConnectionService.h"
 #import "WebViewController.h"
+#import "DeconnexionViewController.h"
 
 @interface AppDelegate ()
 
@@ -31,10 +32,16 @@
     // on prepare les "vues" du menu
     HomeViewController *homeCtrl = [HomeViewController new];
     SearchViewController *searchCtrl = [SearchViewController new];
+    DeconnexionViewController *decoCtrl = [DeconnexionViewController new];
     
     // on créé le menu et on le remplit avec les "vues"
     self.menuCtrl = [[UITabBarController alloc] init];
-    self.menuCtrl.viewControllers = [NSArray arrayWithObjects:homeCtrl , searchCtrl, nil];
+    self.menuCtrl.viewControllers = [NSArray arrayWithObjects:homeCtrl , searchCtrl, decoCtrl, nil];
+    
+    // customization des items de la tab bar
+    [[self.menuCtrl.tabBar items] objectAtIndex:0].title = @"Home";
+    [[self.menuCtrl.tabBar items] objectAtIndex:1].title = @"Search";
+    [[self.menuCtrl.tabBar items] objectAtIndex:2].title = @"Quit";
     
     
     // création de la requête de demande de token

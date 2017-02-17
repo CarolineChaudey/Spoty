@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		821330EE1E57835100F4C451 /* DeconnexionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 821330EC1E57835100F4C451 /* DeconnexionViewController.m */; };
+		821330EF1E57835100F4C451 /* DeconnexionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 821330ED1E57835100F4C451 /* DeconnexionViewController.xib */; };
 		828759E31E5620D7003B34FD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 828759E21E5620D7003B34FD /* main.m */; };
 		828759E61E5620D7003B34FD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 828759E51E5620D7003B34FD /* AppDelegate.m */; };
 		828759F11E5620D7003B34FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 828759F01E5620D7003B34FD /* Assets.xcassets */; };
@@ -20,6 +22,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		821330EB1E57835100F4C451 /* DeconnexionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeconnexionViewController.h; sourceTree = "<group>"; };
+		821330EC1E57835100F4C451 /* DeconnexionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeconnexionViewController.m; sourceTree = "<group>"; };
+		821330ED1E57835100F4C451 /* DeconnexionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeconnexionViewController.xib; sourceTree = "<group>"; };
 		828759DE1E5620D7003B34FD /* Spoty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Spoty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		828759E21E5620D7003B34FD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		828759E41E5620D7003B34FD /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -85,6 +90,9 @@
 				82875A081E56430E003B34FD /* WebViewController.h */,
 				82875A091E56430E003B34FD /* WebViewController.m */,
 				82875A0A1E56430E003B34FD /* WebViewController.xib */,
+				821330EB1E57835100F4C451 /* DeconnexionViewController.h */,
+				821330EC1E57835100F4C451 /* DeconnexionViewController.m */,
+				821330ED1E57835100F4C451 /* DeconnexionViewController.xib */,
 			);
 			path = Spoty;
 			sourceTree = "<group>";
@@ -159,6 +167,7 @@
 				82875A041E562886003B34FD /* SearchViewController.xib in Resources */,
 				82875A0C1E56430E003B34FD /* WebViewController.xib in Resources */,
 				828759FF1E5627CD003B34FD /* HomeViewController.xib in Resources */,
+				821330EF1E57835100F4C451 /* DeconnexionViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -171,6 +180,7 @@
 			files = (
 				828759E61E5620D7003B34FD /* AppDelegate.m in Sources */,
 				82875A0B1E56430E003B34FD /* WebViewController.m in Sources */,
+				821330EE1E57835100F4C451 /* DeconnexionViewController.m in Sources */,
 				828759E31E5620D7003B34FD /* main.m in Sources */,
 				82875A031E562886003B34FD /* SearchViewController.m in Sources */,
 				828759FE1E5627CD003B34FD /* HomeViewController.m in Sources */,
