@@ -7,6 +7,7 @@
 //
 
 #import "DeconnexionViewController.h"
+#import "AppDelegate.h"
 
 @interface DeconnexionViewController ()
 
@@ -16,7 +17,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    AppDelegate *appDelegate = (AppDelegate*) [[UIApplication sharedApplication] delegate];
+    [appDelegate spotifyConnection];
 }
 
 - (void)didReceiveMemoryWarning {

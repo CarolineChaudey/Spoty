@@ -24,6 +24,7 @@
 @property (strong, nonatomic) UIWebView *oauthView;
 
 -(BOOL) accessApplication;
+-(void)spotifyConnection;
 
 @end
 

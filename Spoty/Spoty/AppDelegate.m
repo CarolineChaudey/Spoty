@@ -29,6 +29,24 @@
     CGRect screenRect = [UIScreen mainScreen].bounds;
     self.window = [[UIWindow alloc] initWithFrame:screenRect];
     
+    // création de la requête de demande de token
+    NSURL *authURL = [NSURL URLWithString:@"https://accounts.spotify.com/authorize?client_id=830c60285d82492dab749e02b5864c5e&response_type=code&redirect_uri=spoty://oauth/callback"];
+    NSURLRequest *request = [NSURLRequest requestWithURL:authURL];
+    
+    
+    // on créé la vue web qui affichera la page d'authentification de spotify
+    self.oauthView = [[UIWebView alloc] initWithFrame:screenRect];
+    [self.oauthView loadRequest:request];
+    self.wvc = [[WebViewController alloc] init];
+    
+    [self spotifyConnection];
+    
+    return YES;
+}
+
+
+-(void)spotifyConnection {
+    
     // on prepare les "vues" du menu
     HomeViewController *homeCtrl = [HomeViewController new];
     SearchViewController *searchCtrl = [SearchViewController new];
@@ -43,23 +61,11 @@
     [[self.menuCtrl.tabBar items] objectAtIndex:1].title = @"Search";
     [[self.menuCtrl.tabBar items] objectAtIndex:2].title = @"Quit";
     
-    
-    // création de la requête de demande de token
-    NSURL *authURL = [NSURL URLWithString:@"https://accounts.spotify.com/authorize?client_id=830c60285d82492dab749e02b5864c5e&response_type=code&redirect_uri=spoty://oauth/callback"];
-    NSURLRequest *request = [NSURLRequest requestWithURL:authURL];
-    
-    
-    // on créé la vue web qui affichera la page d'authentification de spotify
-    UIWebView *webView = [[UIWebView alloc] initWithFrame:screenRect];
-    self.wvc = [[WebViewController alloc] init];
-    [webView setDelegate:self.wvc];
-    [webView loadRequest:request];
-    
-    [self.wvc.view addSubview:webView];
+    [self.oauthView setDelegate:self.wvc];
+    [self.wvc.view addSubview:self.oauthView];
     self.window.rootViewController = self.wvc;
     [self.window makeKeyAndVisible];
-    
-    return YES;
+
 }
 
 - (BOOL)accessApplication {
@@ -67,6 +73,7 @@
     NSLog(@"On accede a l'application.");
     [self.oauthView removeFromSuperview];
     self.window.rootViewController = self.menuCtrl;
+    [self.menuCtrl setSelectedIndex:0];
     
     return YES;
 }
