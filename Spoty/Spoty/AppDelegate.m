@@ -50,16 +50,23 @@
     
     
     // on créé la vue web qui affichera la page d'authentification de spotify
-    UIWebView *webView = [[UIWebView alloc] initWithFrame:screenRect];
+    self.oauthView = [[UIWebView alloc] initWithFrame:screenRect];
+    [self.oauthView loadRequest:request];
     self.wvc = [[WebViewController alloc] init];
-    [webView setDelegate:self.wvc];
-    [webView loadRequest:request];
     
-    [self.wvc.view addSubview:webView];
-    self.window.rootViewController = self.wvc;
-    [self.window makeKeyAndVisible];
+    [self spotifyConnection];
     
     return YES;
+}
+
+
+-(void)spotifyConnection {
+    
+    [self.oauthView setDelegate:self.wvc];
+    [self.wvc.view addSubview:self.oauthView];
+    self.window.rootViewController = self.wvc;
+    [self.window makeKeyAndVisible];
+
 }
 
 - (BOOL)accessApplication {
