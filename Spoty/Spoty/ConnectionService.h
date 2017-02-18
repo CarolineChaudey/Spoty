@@ -31,5 +31,6 @@ extern const NSString *REDIRECT_URI;
 + (NSData*) encodeDictionary:(NSDictionary*)dictionary;
 + (BOOL) setTokens:(id)appDelegate;
 
++(NSArray*) fetchSearchResultWith:(NSString*)keyWords AndType:(NSString*)type;
 
 @end

@@ -123,4 +123,24 @@ static NSString *refresh_token = nil;
     return YES;
 }
 
++(NSArray*) fetchSearchResultWith:(NSString*)keyWords AndType:(NSString*)type {
+    NSArray *results = [NSArray new];
+    NSString *url = @"https://api.spotify.com/v1/search?q=";
+    [url stringByAppendingString:keyWords];
+    [url stringByAppendingString:@"&type="];
+    [url stringByAppendingString:type];
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *requestBodyData, NSURLResponse *response, NSError *error) {
+        
+        if (!error){
+            NSString *ret = [[NSString alloc] initWithData:requestBodyData encoding:NSUTF8StringEncoding];
+            NSLog(@"Resultats : %@", ret);
+        } else {
+            NSLog(@"ERREUR LORS DE LA RECUPERATION");
+        }
+    }
+                                  return results;
+}
+
 @end
