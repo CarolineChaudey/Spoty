@@ -77,10 +77,12 @@ static NSMutableDictionary *playlist = nil;
 }
 
 
-+ (BOOL) setTokens:(AppDelegate*)appDelegate; {
++ (BOOL) setTokens:(AppDelegate*)appDelegate {
     if (nil == [self code]) {
         return NO;
     }
+    
+    NSLog(@"JE RENNTTREE");
     
     NSMutableURLRequest * request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"https://accounts.spotify.com/api/token"]];
     request.HTTPMethod = @"POST";
