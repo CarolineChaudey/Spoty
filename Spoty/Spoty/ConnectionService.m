@@ -57,11 +57,13 @@ static NSMutableDictionary *playlist = nil;
     return [encodedDictionary dataUsingEncoding:NSUTF8StringEncoding];
 }
 
+
 - (BOOL) setTokens:(AppDelegate*)appDelegate {
     if (nil == self.code) {
         return NO;
     }
     NSLog(@"Je suis dans setTokens");
+    
     NSMutableURLRequest * request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"https://accounts.spotify.com/api/token"]];
     request.HTTPMethod = @"POST";
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
