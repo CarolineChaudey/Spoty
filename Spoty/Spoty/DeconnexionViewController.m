@@ -18,7 +18,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     AppDelegate *appDelegate = (AppDelegate*) [[UIApplication sharedApplication] delegate];
-    [appDelegate spotifyConnection];
+    [appDelegate displayWebView];
 }
 
 - (void)didReceiveMemoryWarning {

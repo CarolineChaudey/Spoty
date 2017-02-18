@@ -15,12 +15,20 @@
 
 @implementation HomeViewController
 
+@synthesize coService = coService_;
+
+-(instancetype)initWithService:(ConnectionService *)service {
+    self.coService = service;
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [ConnectionService featurePlaylist];
-    
-    // Do any additional setup after loading the view from its nib.
+    NSLog(@"HOME VIEW CONTROLLER");
+    [self.coService featurePlaylist];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
 }
 
 - (void)didReceiveMemoryWarning {

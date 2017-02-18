@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ConnectionService.h"
 
-@interface HomeViewController : UIViewController
+@interface HomeViewController : UIViewController{
+    ConnectionService *coService_;
+}
+
+@property (strong, nonatomic) ConnectionService *coService;
+
+-(instancetype)initWithService:(ConnectionService*)service;
 
 @end
