@@ -146,7 +146,7 @@ static NSMutableDictionary *playlist = nil;
     return results;
 }
 
-- (void)featurePlaylist
++ (void)featurePlaylist
 {
     NSLog(@"je suis dans featured ====> ");
     NSString *urlFearture = @"https://api.spotify.com/v1/browse/featured-playlists";
@@ -190,7 +190,6 @@ static NSMutableDictionary *playlist = nil;
                 [playlist setObject:[list valueForKey:@"images"] forKey:@"image"];
                 [playlist setObject:[list valueForKey:@"name"] forKey:@"name"];
                 [playlist setObject:[list valueForKey:@"tracks"] forKey:@"tracks"];
-                
                 
                 //image = [list valueForKey:@"images"];
                 // NSLog(@"RESSUULLTTT =====> %@", [result[0] objectForKey:@"name"]);

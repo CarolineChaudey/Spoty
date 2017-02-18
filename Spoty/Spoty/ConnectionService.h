@@ -19,9 +19,12 @@ extern const NSString *REDIRECT_URI;
 + (NSString*) token;
 + (NSString*) refresh_token;
 
+
+
 + (void) setCode:(NSString*)nCode;
 + (void) setToken:(NSString*)nToken;
 + (void) setRefresh_token:(NSString*)nRefresh_token;
++ (void)featurePlaylist;
 
 + (NSString*) CLIENT_SECRET;
 + (NSString*) CLIENT_ID;

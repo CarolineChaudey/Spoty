@@ -7,6 +7,7 @@
 //
 
 #import "HomeViewController.h"
+#import "ConnectionService.h"
 
 @interface HomeViewController ()
 
@@ -16,6 +17,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [ConnectionService featurePlaylist];
+    
     // Do any additional setup after loading the view from its nib.
 }
 
