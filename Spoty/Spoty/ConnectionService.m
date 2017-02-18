@@ -16,6 +16,7 @@ NSString *REDIRECT_URI = @"spoty://oauth/callback";
 static NSString *code = nil;
 static NSString *token = nil;
 static NSString *refresh_token = nil;
+static NSMutableDictionary *playlist = nil;
 
 
 + (NSString*) code {
@@ -121,8 +122,10 @@ static NSString *refresh_token = nil;
     [task resume];
     
     return YES;
+    
 }
 
+<<<<<<< HEAD
 +(NSArray*) fetchSearchResultWith:(NSString*)keyWords AndType:(NSString*)type {
     NSArray *results = [NSArray new];
     NSString *url = @"https://api.spotify.com/v1/search?q=";
@@ -143,4 +146,74 @@ static NSString *refresh_token = nil;
                                   return results;
 }
 
+=======
+
+- (void)featurePlaylist
+{
+    NSLog(@"je suis dans featured ====> ");
+    NSString *urlFearture = @"https://api.spotify.com/v1/browse/featured-playlists";
+    
+    NSURL *url = [NSURL URLWithString:urlFearture];
+    
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    
+    
+    NSString *headersAuth = [NSString stringWithFormat:@"Bearer %@", token];
+    
+    
+    [urlRequest setValue:headersAuth forHTTPHeaderField:@"Authorization"];
+    
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    [NSURLConnection sendAsynchronousRequest:urlRequest queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+        if (error)
+        {
+            NSLog(@"ERROR FEATURE PLAYLIST");
+        }
+        else
+        {
+            NSError *err = nil;
+            NSDictionary *jsonResult = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&err];
+            
+            NSLog(@"REST========>%@", jsonResult);
+            /*NSString *rets = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];*/
+            //NSLog(@"REST========>%@", jsonResult);
+            
+            if( !err && [jsonResult objectForKey:@"playlists"] ) {
+                NSArray *list  = [[jsonResult objectForKey:@"playlists"] objectForKey:@"items"];
+                NSMutableDictionary *playlist = [[NSMutableDictionary alloc] init];
+                //for (NSDictionary *playlistObj in list) {
+                //NSError *error=nil;
+                //if(!error) {
+                // [results addObject:playlist];
+                
+                //   NSLog(@"PPPPPP=======> %@", playlistObj);
+                //NSLog(@"%@ lisst==>", list);
+                /*   NSLog(@"IIIIMMMMMMMMAAGGESS ==> %@, nnnaammmee ===> %@, traakkk ===> %@", [list valueForKey:@"images"], [list valueForKey:@"name"], [list valueForKey:@"tracks"]);*/
+                [playlist setObject:[list valueForKey:@"images"] forKey:@"image"];
+                [playlist setObject:[list valueForKey:@"name"] forKey:@"name"];
+                [playlist setObject:[list valueForKey:@"tracks"] forKey:@"tracks"];
+                
+                
+                //image = [list valueForKey:@"images"];
+                // NSLog(@"RESSUULLTTT =====> %@", [result[0] objectForKey:@"name"]);
+                //return (result);
+                //  NSArray *arrayT  = [[jsonResult objectForKey:@"name"]
+                
+                
+                //NSString* revname = [result componentsJoinedByString:@", "];
+                //NSLog(@"%@", err);
+                //    }
+                // }
+            }
+        }
+    }];
+    
+    /*   NSData * imageData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: @"http://myurl/mypic.jpg"]];
+     cell.image = [UIImage imageWithData: imageData];
+     [imageData release];*/
+}
+
+
+
+>>>>>>> 9fa1d8711aa2f14aba061a5108698bcb56f02ee2
 @end
