@@ -125,7 +125,6 @@ static NSMutableDictionary *playlist = nil;
     
 }
 
-<<<<<<< HEAD
 +(NSArray*) fetchSearchResultWith:(NSString*)keyWords AndType:(NSString*)type {
     NSArray *results = [NSArray new];
     NSString *url = @"https://api.spotify.com/v1/search?q=";
@@ -134,6 +133,7 @@ static NSMutableDictionary *playlist = nil;
     [url stringByAppendingString:type];
     
     NSURLSession *session = [NSURLSession sharedSession];
+    NSMutableURLRequest * request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *requestBodyData, NSURLResponse *response, NSError *error) {
         
         if (!error){
@@ -142,11 +142,9 @@ static NSMutableDictionary *playlist = nil;
         } else {
             NSLog(@"ERREUR LORS DE LA RECUPERATION");
         }
-    }
-                                  return results;
+    }];
+    return results;
 }
-
-=======
 
 - (void)featurePlaylist
 {
@@ -213,7 +211,4 @@ static NSMutableDictionary *playlist = nil;
      [imageData release];*/
 }
 
-
-
->>>>>>> 9fa1d8711aa2f14aba061a5108698bcb56f02ee2
 @end
