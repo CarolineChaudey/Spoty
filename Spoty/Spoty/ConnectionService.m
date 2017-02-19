@@ -102,7 +102,7 @@ static NSMutableDictionary *playlist = nil;
     
 }
 
--(NSArray*) fetchSearchResultWith:(NSString*)keyWords AndType:(NSString*)type {
+/*-(NSArray*) fetchSearchResultWith:(NSString*)keyWords AndType:(NSString*)type {
     NSArray *results = [NSArray new];
     NSString *url = @"https://api.spotify.com/v1/search?q=";
     [url stringByAppendingString:keyWords];
@@ -130,7 +130,7 @@ static NSMutableDictionary *playlist = nil;
     [task resume];
     return results;
 }
-
+*/
 - (void)featurePlaylist:(HomeViewController*)homeView {
     NSLog(@"je suis dans featured ====> ");
     NSString *urlFearture = @"https://api.spotify.com/v1/browse/featured-playlists";
@@ -173,7 +173,7 @@ static NSMutableDictionary *playlist = nil;
 
 
 
-/*- (void)searchData:(SearchViewController*)searchView {
+- (void)searchData:(SearchViewController*)searchView {
     NSLog(@"je suis dans searchView ====> ");
     NSString *urlFearture = @"https://api.spotify.com/v1/browse/featured-playlists";
     
@@ -206,11 +206,11 @@ static NSMutableDictionary *playlist = nil;
                 [playlist setObject:[list valueForKey:@"name"] forKey:@"name"];
                 [playlist setObject:[list valueForKey:@"tracks"] forKey:@"tracks"];
                 //NSLog(@"PLAYSLIST DICT : %@", playlist);
-                [homeView receivePlaylists:playlist];
+                [searchView fetchingResults:playlist];
             }
         }
     }];
     [task resume];
-}*/
+}
 
 @end

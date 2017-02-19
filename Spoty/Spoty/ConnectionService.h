@@ -26,6 +26,7 @@ extern const NSString *REDIRECT_URI;
 
 
 - (void)featurePlaylist;
+- (void)searchData;
 
 - (NSString*) CLIENT_SECRET;
 - (NSString*) CLIENT_ID;
@@ -35,7 +36,8 @@ extern const NSString *REDIRECT_URI;
 - (NSData*) encodeDictionary:(NSDictionary*)dictionary;
 - (BOOL) setTokens:(id)appDelegate;
 
-- (NSArray*) fetchSearchResultWith:(NSString*)keyWords AndType:(NSString*)type;
+/*- (void) fetchSearchResultWith:(NSString*)keyWords AndType:(NSString*)type;*/
 - (void)featurePlaylist:(HomeViewController*)homeView;
+- (void)searchData:(SearchViewController*)searchView;
 
 @end

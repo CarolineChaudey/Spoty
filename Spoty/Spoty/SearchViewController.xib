@@ -11,7 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SearchViewController">
             <connections>
-                <outlet property="searchBar" destination="Swn-zS-px7" id="82c-tX-HNe"/>
+                <outlet property="searchBar" destination="zen-T6-5eI" id="4d2-UB-7si"/>
                 <outlet property="searchDisplayController" destination="eCn-bB-53x" id="mvt-43-yy3"/>
                 <outlet property="searchView" destination="WoB-yB-tF6" id="wtw-bO-jqh"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -22,14 +22,6 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <searchBar contentMode="redraw" misplaced="YES" id="Swn-zS-px7">
-                    <rect key="frame" x="0.0" y="122" width="375" height="44"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                    <textInputTraits key="textInputTraits"/>
-                    <connections>
-                        <outlet property="delegate" destination="-1" id="AXe-fS-G8O"/>
-                    </connections>
-                </searchBar>
                 <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Search Engine" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ivl-an-io0">
                     <rect key="frame" x="0.0" y="34" width="375" height="62"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -44,6 +36,11 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <color key="separatorColor" red="0.0" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                 </tableView>
+                <searchBar contentMode="redraw" misplaced="YES" id="zen-T6-5eI">
+                    <rect key="frame" x="0.0" y="108" width="375" height="44"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <textInputTraits key="textInputTraits"/>
+                </searchBar>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <point key="canvasLocation" x="34.5" y="53.5"/>
@@ -51,7 +48,6 @@
         <searchDisplayController id="eCn-bB-53x">
             <connections>
                 <outlet property="delegate" destination="-1" id="c9m-Ap-D3W"/>
-                <outlet property="searchBar" destination="Swn-zS-px7" id="pSx-Dj-QmR"/>
                 <outlet property="searchContentsController" destination="-1" id="Ocn-ns-NxS"/>
                 <outlet property="searchResultsDataSource" destination="-1" id="ZJ5-NT-FTb"/>
                 <outlet property="searchResultsDelegate" destination="-1" id="4Od-m1-MvE"/>

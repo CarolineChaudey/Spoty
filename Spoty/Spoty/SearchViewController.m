@@ -22,8 +22,14 @@
     [super viewDidLoad];
     // Accès au service de connexion via un AppDelegate
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    [appDelegate.coService fetchSearchResultWith:self];
+    [appDelegate.coService searchData:self];
 }
+
+-(void)fetchingResults:(NSMutableDictionary*)data {
+    self.searchresults = data;
+    [self.searchView setDataSource:self];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -31,7 +37,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [[self.searchresults objectForKey:@"artist"] count];
+    return [[self.searchresults objectForKey:@"name"] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -45,7 +51,7 @@
     // Populate the rows with searchresults
     NSString *artistName = [[self.searchresults objectForKey:@"name"] objectAtIndex:indexPath.row];
     NSString *albumName = [[[self.searchresults objectForKey:@"albums"] objectAtIndex:indexPath.row] objectForKey:@"total"];
-    cell.textLabel.text = [NSString stringWithFormat:@"%@ : %@ morceaux", artistName, albumName];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@ : %@", artistName, albumName];
     
     
     return cell;
