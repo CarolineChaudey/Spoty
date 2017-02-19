@@ -7,16 +7,22 @@
 //
 
 #import "SearchViewController.h"
+#import "AppDelegate.h"
 
 @interface SearchViewController ()
 
+@property (weak, nonatomic) IBOutlet UITableView *searchView;
 @end
 
 @implementation SearchViewController
 
+@synthesize searchresults = searchresults_;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    // Accès au service de connexion via un AppDelegate
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appDelegate.coService fetchSearchResultWith:self];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -24,14 +30,24 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [[self.searchresults objectForKey:@"artist"] count];
 }
-*/
 
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *identifier = @"unArtiste";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+    }
+    
+    // Populate the rows with searchresults
+    NSString *artistName = [[self.searchresults objectForKey:@"name"] objectAtIndex:indexPath.row];
+    NSString *albumName = [[[self.searchresults objectForKey:@"albums"] objectAtIndex:indexPath.row] objectForKey:@"total"];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@ : %@ morceaux", artistName, albumName];
+    
+    
+    return cell;
+}
 @end

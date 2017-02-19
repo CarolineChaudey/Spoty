@@ -101,13 +101,20 @@ static NSMutableDictionary *playlist = nil;
     return YES;
     
 }
-
+/*
 -(NSArray*) fetchSearchResultWith:(NSString*)keyWords AndType:(NSString*)type {
     NSArray *results = [NSArray new];
     NSString *url = @"https://api.spotify.com/v1/search?q=";
     [url stringByAppendingString:keyWords];
     [url stringByAppendingString:@"&type="];
     [url stringByAppendingString:type];
+    
+    NSString *headersAuth = [NSString stringWithFormat:@"Bearer %@", [self.token stringByReplacingOccurrencesOfString:@"\"" withString:@""]];
+    //NSLog(@"TOKEN RECUPERE = %@", [headersAuth stringByReplacingOccurrencesOfString:@"\"" withString:@""]);
+    
+    //[url setValue:headersAuth forHTTPHeaderField:@"Authorization"];
+    //NSLog(@"URL HEADER ENVOYEE : %@", urlRequest.allHTTPHeaderFields);
+    
     
     NSURLSession *session = [NSURLSession sharedSession];
     NSMutableURLRequest * request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
@@ -120,9 +127,10 @@ static NSMutableDictionary *playlist = nil;
             NSLog(@"ERREUR LORS DE LA RECUPERATION");
         }
     }];
+    [task resume];
     return results;
 }
-
+*/
 - (void)featurePlaylist:(HomeViewController*)homeView {
     NSLog(@"je suis dans featured ====> ");
     NSString *urlFearture = @"https://api.spotify.com/v1/browse/featured-playlists";
@@ -161,12 +169,49 @@ static NSMutableDictionary *playlist = nil;
     [task resume];
 }
 
+
 -(void)getTracksForPlaylist:(NSString*)href andForView:(TracksViewController*)tracksView {
-    NSURL *url = [NSURL URLWithString:href];
+        NSURL *url = [NSURL URLWithString:href];
+        NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    
+        NSString *headersAuth = [NSString stringWithFormat:@"Bearer %@", [self.token stringByReplacingOccurrencesOfString:@"\"" withString:@""]];
+        [urlRequest setValue:headersAuth forHTTPHeaderField:@"Authorization"];
+    
+        NSURLSession *session = [NSURLSession sharedSession];
+        NSURLSessionDataTask *task = [session dataTaskWithRequest:urlRequest completionHandler:^(NSData *requestBodyData, NSURLResponse *response, NSError *error) {
+                if (error) {
+                    NSLog(@"Il y a eu une erreur");
+                } else {
+                NSError *err = nil;
+                NSDictionary *jsonResult = [NSJSONSerialization JSONObjectWithData:requestBodyData options:NSJSONReadingAllowFragments error:&err];
+                
+                if([jsonResult objectForKey:@"items"]) {
+                    NSArray *list  = [jsonResult objectForKey:@"items"];
+                    
+                    NSMutableDictionary *tracks = [[NSMutableDictionary alloc] init];
+                    [tracks setObject:[[list valueForKey:@"track"]valueForKey:@"name"] forKey:@"name"];
+                    NSLog(@"%@", tracks);
+                    [tracksView receiveData:tracks];
+                }
+        }
+    }];
+    [task resume];
+}
+
+
+/*- (void)searchData:(SearchViewController*)searchView {
+    NSLog(@"je suis dans searchView ====> ");
+    NSString *urlFearture = @"https://api.spotify.com/v1/browse/featured-playlists";
+    
+    NSURL *url = [NSURL URLWithString:urlFearture];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     
+    
     NSString *headersAuth = [NSString stringWithFormat:@"Bearer %@", [self.token stringByReplacingOccurrencesOfString:@"\"" withString:@""]];
+    //NSLog(@"TOKEN RECUPERE = %@", [headersAuth stringByReplacingOccurrencesOfString:@"\"" withString:@""]);
+    
     [urlRequest setValue:headersAuth forHTTPHeaderField:@"Authorization"];
+    //NSLog(@"URL HEADER ENVOYEE : %@", urlRequest.allHTTPHeaderFields);
     
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:urlRequest completionHandler:^(NSData *requestBodyData, NSURLResponse *response, NSError *error) {
@@ -193,5 +238,29 @@ static NSMutableDictionary *playlist = nil;
     }];
     [task resume];
 }
+
+            NSLog(@"ERROR FEATURE PLAYLIST");
+        }
+        else {
+            NSError *err = nil;
+            NSDictionary *jsonResult = [NSJSONSerialization JSONObjectWithData:requestBodyData options:NSJSONReadingAllowFragments error:&err];
+            
+            //NSLog(@"REST========>%@", [jsonResult objectForKey:@"message"]);
+            
+            if( !err && [jsonResult objectForKey:@"playlists"] ) {
+                NSArray *list  = [[jsonResult objectForKey:@"playlists"] objectForKey:@"items"];
+                NSMutableDictionary *playlist = [[NSMutableDictionary alloc] init];
+                
+                [playlist setObject:[list valueForKey:@"images"] forKey:@"image"];
+                [playlist setObject:[list valueForKey:@"name"] forKey:@"name"];
+                [playlist setObject:[list valueForKey:@"tracks"] forKey:@"tracks"];
+                //NSLog(@"PLAYSLIST DICT : %@", playlist);
+                [homeView receivePlaylists:playlist];
+            }
+        }
+    }];
+    [task resume];
+}*/
+
 
 @end
