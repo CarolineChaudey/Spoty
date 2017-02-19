@@ -7,23 +7,30 @@
 //
 
 #import "TracksViewController.h"
+#import "AppDelegate.h"
 
 @interface TracksViewController ()
+
+@property (nonatomic, strong) NSString *playlistHref;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end
 
 @implementation TracksViewController
 
 @synthesize parent = parent_;
+@synthesize tracksData = tracksData_;
 
 
 - (IBAction)clickReturn:(id)sender {
     NSLog(@"On demande le retour");
+    [self.view removeFromSuperview];
 }
 
-- (instancetype)initWithParent:(HomeViewController *)parent {
+- (instancetype)initWithParent:(HomeViewController *)parent andPlaylist:(NSString*)href {
     self = [super init];
     self.parent = parent;
+    self.playlistHref = href;
     
     return self;
 }
@@ -32,6 +39,14 @@
     [super viewDidLoad];
     self.backButton.userInteractionEnabled = YES;
     [self.backButton addTarget:self action:@selector(clickReturn:) forControlEvents:UIControlEventTouchUpInside];
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appDelegate.coService getTracksForPlaylist:self.playlistHref andForView:self];
+}
+
+- (void) receiveData:(NSDictionary*)tracksData {
+    self.tracksData = tracksData;
+    NSLog(@"Receive track data : %@", self.tracksData);
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -39,5 +54,23 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    NSLog(@"%lu", (unsigned long)[[self.tracksData objectForKey:@"name"] count]);
+    return [[self.tracksData objectForKey:@"name"] count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *identifier = @"SimpleTableItem";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+    }
+    
+    cell.textLabel.text = [[self.tracksData objectForKey:@"name" ] objectAtIndex:indexPath.row];
+    NSLog(@"Cellule name : %@", [[self.tracksData objectForKey:@"name" ] objectAtIndex:indexPath.row]);
+    
+    return cell;
+}
 
 @end

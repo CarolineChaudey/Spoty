@@ -146,8 +146,6 @@ static NSMutableDictionary *playlist = nil;
             NSError *err = nil;
             NSDictionary *jsonResult = [NSJSONSerialization JSONObjectWithData:requestBodyData options:NSJSONReadingAllowFragments error:&err];
             
-            //NSLog(@"REST========>%@", [jsonResult objectForKey:@"message"]);
-            
             if( !err && [jsonResult objectForKey:@"playlists"] ) {
                  NSArray *list  = [[jsonResult objectForKey:@"playlists"] objectForKey:@"items"];
                  NSMutableDictionary *playlist = [[NSMutableDictionary alloc] init];
@@ -159,6 +157,38 @@ static NSMutableDictionary *playlist = nil;
                 [homeView receivePlaylists:playlist];
              }
         }
+    }];
+    [task resume];
+}
+
+-(void)getTracksForPlaylist:(NSString*)href andForView:(TracksViewController*)tracksView {
+    NSURL *url = [NSURL URLWithString:href];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    
+    NSString *headersAuth = [NSString stringWithFormat:@"Bearer %@", [self.token stringByReplacingOccurrencesOfString:@"\"" withString:@""]];
+    [urlRequest setValue:headersAuth forHTTPHeaderField:@"Authorization"];
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:urlRequest completionHandler:^(NSData *requestBodyData, NSURLResponse *response, NSError *error) {
+        if (error) {
+            NSLog(@"Il y a eu une erreur");
+        } else {
+            NSError *err = nil;
+            NSDictionary *jsonResult = [NSJSONSerialization JSONObjectWithData:requestBodyData options:NSJSONReadingAllowFragments error:&err];
+            //NSLog(@"TRACKS : %@", jsonResult);
+            
+            if([jsonResult objectForKey:@"items"]) {
+                NSArray *list  = [jsonResult objectForKey:@"items"];
+                //NSLog(@"%lu", (unsigned long)[list count]);
+                //NSLog(@"%@", [[[list objectAtIndex:0] objectForKey:@"track"] objectForKey:@"name"]);
+                
+                NSMutableDictionary *tracks = [[NSMutableDictionary alloc] init];
+                [tracks setObject:[[list valueForKey:@"track"]valueForKey:@"name"] forKey:@"name"];
+                NSLog(@"%@", tracks);
+                [tracksView receiveData:tracks];
+            }
+        }
+        
     }];
     [task resume];
 }
