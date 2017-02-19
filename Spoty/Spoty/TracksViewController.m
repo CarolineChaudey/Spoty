@@ -8,11 +8,13 @@
 
 #import "TracksViewController.h"
 #import "AppDelegate.h"
+#import "AudioViewController.h"
 
 @interface TracksViewController ()
 
 @property (nonatomic, strong) NSString *playlistHref;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) AudioViewController *audioView;
 
 @end
 
@@ -68,9 +70,15 @@
     }
     
     cell.textLabel.text = [[self.tracksData objectForKey:@"name" ] objectAtIndex:indexPath.row];
-    NSLog(@"Cellule name : %@", [[self.tracksData objectForKey:@"name" ] objectAtIndex:indexPath.row]);
+    //NSLog(@"Cellule name : %@", [[self.tracksData objectForKey:@"name" ] objectAtIndex:indexPath.row]);
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *trackUrl = [[self.tracksData objectForKey:@"url"] objectAtIndex:indexPath.row];
+    self.audioView = [[AudioViewController alloc] initWithSound:trackUrl];
+    [self.view addSubview:self.audioView.view];
 }
 
 @end

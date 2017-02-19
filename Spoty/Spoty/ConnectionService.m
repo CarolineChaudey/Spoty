@@ -184,6 +184,7 @@ static NSMutableDictionary *playlist = nil;
                 
                 NSMutableDictionary *tracks = [[NSMutableDictionary alloc] init];
                 [tracks setObject:[[list valueForKey:@"track"]valueForKey:@"name"] forKey:@"name"];
+                [tracks setObject:[[list valueForKey:@"track"]valueForKey:@"preview_url"] forKey:@"url"];
                 NSLog(@"%@", tracks);
                 [tracksView receiveData:tracks];
             }
