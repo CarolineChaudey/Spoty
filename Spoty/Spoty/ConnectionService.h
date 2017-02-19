@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "HomeViewController.h"
 #import "TracksViewController.h"
+#import "SearchViewController.h"
 
 @class ConnectionService;
 @interface ConnectionService : NSObject {
@@ -34,9 +35,11 @@ extern const NSString *REDIRECT_URI;
 - (NSData*) encodeDictionary:(NSDictionary*)dictionary;
 - (BOOL) setTokens:(id)appDelegate;
 
-- (NSArray*) fetchSearchResultWith:(NSString*)keyWords AndType:(NSString*)type;
+/*- (void) fetchSearchResultWith:(NSString*)keyWords AndType:(NSString*)type;*/
 - (void)featurePlaylist:(HomeViewController*)homeView;
+
 - (void)getTracksForPlaylist:(NSString*)href andForView:(TracksViewController*)tracksView;
+- (void)searchData:(SearchViewController*)searchView;
 
 
 @end

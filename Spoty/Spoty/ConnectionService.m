@@ -131,7 +131,7 @@ static NSMutableDictionary *playlist = nil;
     return results;
 }
 
-//- (void)featurePlaylist:(HomeViewController*)homeView {
+
 - (void)featurePlaylist:(HomeViewController*)homeView {
     NSLog(@"je suis dans featured ====> ");
     NSString *urlFearture = @"https://api.spotify.com/v1/browse/featured-playlists";
@@ -201,7 +201,7 @@ static NSMutableDictionary *playlist = nil;
 }
 
 
-/*- (void)searchData:(SearchViewController*)searchView {
+- (void)searchData:(SearchViewController*)searchView {
     NSLog(@"je suis dans searchView ====> ");
     NSString *urlFearture = @"https://api.spotify.com/v1/browse/featured-playlists";
     
@@ -233,7 +233,7 @@ static NSMutableDictionary *playlist = nil;
                 [tracks setObject:[[list valueForKey:@"track"]valueForKey:@"name"] forKey:@"name"];
                 [tracks setObject:[[list valueForKey:@"track"]valueForKey:@"preview_url"] forKey:@"url"];
                 NSLog(@"%@", tracks);
-                [tracksView receiveData:tracks];
+                [searchView fetchingResults:playlist];
             }
         }
         
@@ -241,28 +241,6 @@ static NSMutableDictionary *playlist = nil;
     [task resume];
 }
 
-            NSLog(@"ERROR FEATURE PLAYLIST");
-        }
-        else {
-            NSError *err = nil;
-            NSDictionary *jsonResult = [NSJSONSerialization JSONObjectWithData:requestBodyData options:NSJSONReadingAllowFragments error:&err];
-            
-            //NSLog(@"REST========>%@", [jsonResult objectForKey:@"message"]);
-            
-            if( !err && [jsonResult objectForKey:@"playlists"] ) {
-                NSArray *list  = [[jsonResult objectForKey:@"playlists"] objectForKey:@"items"];
-                NSMutableDictionary *playlist = [[NSMutableDictionary alloc] init];
-                
-                [playlist setObject:[list valueForKey:@"images"] forKey:@"image"];
-                [playlist setObject:[list valueForKey:@"name"] forKey:@"name"];
-                [playlist setObject:[list valueForKey:@"tracks"] forKey:@"tracks"];
-                //NSLog(@"PLAYSLIST DICT : %@", playlist);
-                [homeView receivePlaylists:playlist];
-            }
-        }
-    }];
-    [task resume];
-}*/
 
 
 @end

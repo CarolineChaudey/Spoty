@@ -14,6 +14,7 @@
 
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
 
+
 @property (strong, nonatomic) NSMutableDictionary *searchresults;
 
 -(void)fetchingResults:(NSMutableDictionary*)data;
