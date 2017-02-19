@@ -13,6 +13,7 @@
 @interface HomeViewController ()
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) TracksViewController *tracksView;
 
 @end
 
@@ -75,14 +76,14 @@
     NSLog(@"On a cliqué sur : %@", playName);
     
     //on passe à la vue suivante
-    TracksViewController *tracksView = [TracksViewController new];
-    [self.view addSubview:tracksView.view];
-    //self.view.userInteractionEnabled = FALSE;
+    NSString *playlist = [[[self.playlists objectForKey:@"tracks"] objectAtIndex:indexPath.row] objectForKey:@"href"];
+    self.tracksView = [[TracksViewController alloc] initWithParent:self andPlaylist:playlist];
+    [self.view addSubview:self.tracksView.view];
 }
 
 - (IBAction)clickReturn:(id)sender {
     NSLog(@"On demande le retour dans le parent");
-    
+    //[self.tracksView.view removeFromSuperview];
 }
 
 
