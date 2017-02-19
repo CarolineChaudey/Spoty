@@ -63,7 +63,7 @@
 -(void)spotifyConnection {
     
     // on prepare les "vues" du menu
-    HomeViewController *homeCtrl = [[HomeViewController alloc] initWithService:self.coService];
+    HomeViewController *homeCtrl = [HomeViewController new];
     SearchViewController *searchCtrl = [SearchViewController new];
     DeconnexionViewController *decoCtrl = [DeconnexionViewController new];
     NSLog(@"Les 3 options sont creees");

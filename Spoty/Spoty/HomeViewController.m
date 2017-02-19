@@ -7,7 +7,7 @@
 //
 
 #import "HomeViewController.h"
-#import "ConnectionService.h"
+#import "AppDelegate.h"
 
 @interface HomeViewController ()
 
@@ -15,18 +15,22 @@
 
 @implementation HomeViewController
 
-@synthesize coService = coService_;
-
--(instancetype)initWithService:(ConnectionService *)service {
-    self.coService = service;
-    return self;
-}
+@synthesize playlists = playlists_;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     NSLog(@"HOME VIEW CONTROLLER");
-    [self.coService featurePlaylist];
+    //[self.coService featurePlaylist];
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appDelegate.coService featurePlaylist:self];
+    
 }
+
+-(void)receivePlaylists:(NSMutableDictionary*)data {
+    self.playlists = data;
+    NSLog(@"HomeView has now the data : %@", self.playlists);
+}
+
 
 - (void)viewDidAppear:(BOOL)animated {
 }
@@ -36,14 +40,5 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

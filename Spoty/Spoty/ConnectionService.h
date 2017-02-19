@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "HomeViewController.h"
 
 @class ConnectionService;
 @interface ConnectionService : NSObject {
@@ -35,5 +36,6 @@ extern const NSString *REDIRECT_URI;
 - (BOOL) setTokens:(id)appDelegate;
 
 - (NSArray*) fetchSearchResultWith:(NSString*)keyWords AndType:(NSString*)type;
+- (void)featurePlaylist:(HomeViewController*)homeView;
 
 @end

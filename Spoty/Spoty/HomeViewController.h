@@ -7,14 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ConnectionService.h"
 
 @interface HomeViewController : UIViewController{
-    ConnectionService *coService_;
+    NSMutableDictionary *playlists_;
 }
 
-@property (strong, nonatomic) ConnectionService *coService;
+@property (strong, nonatomic) NSMutableDictionary *playlists;
 
--(instancetype)initWithService:(ConnectionService*)service;
+-(void)receivePlaylists:(NSMutableDictionary*)data;
 
 @end
