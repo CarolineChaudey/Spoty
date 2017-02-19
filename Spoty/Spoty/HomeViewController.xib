@@ -24,6 +24,8 @@
                     <rect key="frame" x="0.0" y="50" width="375" height="537"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="separatorColor" red="0.58312334539999999" green="1" blue="0.61420416590000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="sectionIndexBackgroundColor" red="0.58312334539999999" green="1" blue="0.61420416590000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="CHi-9A-axM"/>
                         <outlet property="delegate" destination="-1" id="H52-Lp-QFH"/>
