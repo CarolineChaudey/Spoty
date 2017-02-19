@@ -22,7 +22,7 @@
     [super viewDidLoad];
     // Accès au service de connexion via un AppDelegate
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    [appDelegate.coService fetchSearchResultWith:self];
+    [appDelegate.coService fetchSearchResultWith:self AndType:@""];
 }
 
 - (void)didReceiveMemoryWarning {

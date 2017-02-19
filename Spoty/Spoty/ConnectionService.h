@@ -26,8 +26,6 @@ extern const NSString *REDIRECT_URI;
 @property (nonatomic, strong) NSString *refreshToken;
 
 
-- (void)featurePlaylist;
-
 - (NSString*) CLIENT_SECRET;
 - (NSString*) CLIENT_ID;
 - (NSString*) REDIRECT_URI;
