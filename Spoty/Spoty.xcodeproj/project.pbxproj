@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		820D98B61E59DBAD00CD5E36 /* TracksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 820D98B41E59DBAD00CD5E36 /* TracksViewController.m */; };
 		820D98B71E59DBAD00CD5E36 /* TracksViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 820D98B51E59DBAD00CD5E36 /* TracksViewController.xib */; };
+		820D98C01E5A29C700CD5E36 /* AudioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 820D98BE1E5A29C700CD5E36 /* AudioViewController.m */; };
+		820D98C11E5A29C700CD5E36 /* AudioViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 820D98BF1E5A29C700CD5E36 /* AudioViewController.xib */; };
+		820D98C41E5A2A7900CD5E36 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 820D98C31E5A2A7900CD5E36 /* AVKit.framework */; };
+		820D98C61E5A2A8300CD5E36 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 820D98C51E5A2A8300CD5E36 /* AVFoundation.framework */; };
 		821330EE1E57835100F4C451 /* DeconnexionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 821330EC1E57835100F4C451 /* DeconnexionViewController.m */; };
 		821330EF1E57835100F4C451 /* DeconnexionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 821330ED1E57835100F4C451 /* DeconnexionViewController.xib */; };
 		828759E31E5620D7003B34FD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 828759E21E5620D7003B34FD /* main.m */; };
@@ -27,6 +31,11 @@
 		820D98B31E59DBAD00CD5E36 /* TracksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TracksViewController.h; sourceTree = "<group>"; };
 		820D98B41E59DBAD00CD5E36 /* TracksViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TracksViewController.m; sourceTree = "<group>"; };
 		820D98B51E59DBAD00CD5E36 /* TracksViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TracksViewController.xib; sourceTree = "<group>"; };
+		820D98BD1E5A29C700CD5E36 /* AudioViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioViewController.h; sourceTree = "<group>"; };
+		820D98BE1E5A29C700CD5E36 /* AudioViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioViewController.m; sourceTree = "<group>"; };
+		820D98BF1E5A29C700CD5E36 /* AudioViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AudioViewController.xib; sourceTree = "<group>"; };
+		820D98C31E5A2A7900CD5E36 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
+		820D98C51E5A2A8300CD5E36 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		821330EB1E57835100F4C451 /* DeconnexionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeconnexionViewController.h; sourceTree = "<group>"; };
 		821330EC1E57835100F4C451 /* DeconnexionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeconnexionViewController.m; sourceTree = "<group>"; };
 		821330ED1E57835100F4C451 /* DeconnexionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeconnexionViewController.xib; sourceTree = "<group>"; };
@@ -54,17 +63,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				820D98C61E5A2A8300CD5E36 /* AVFoundation.framework in Frameworks */,
+				820D98C41E5A2A7900CD5E36 /* AVKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		820D98C21E5A2A7800CD5E36 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				820D98C51E5A2A8300CD5E36 /* AVFoundation.framework */,
+				820D98C31E5A2A7900CD5E36 /* AVKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		828759D51E5620D7003B34FD = {
 			isa = PBXGroup;
 			children = (
 				828759E01E5620D7003B34FD /* Spoty */,
 				828759DF1E5620D7003B34FD /* Products */,
+				820D98C21E5A2A7800CD5E36 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -101,6 +122,9 @@
 				820D98B31E59DBAD00CD5E36 /* TracksViewController.h */,
 				820D98B41E59DBAD00CD5E36 /* TracksViewController.m */,
 				820D98B51E59DBAD00CD5E36 /* TracksViewController.xib */,
+				820D98BD1E5A29C700CD5E36 /* AudioViewController.h */,
+				820D98BE1E5A29C700CD5E36 /* AudioViewController.m */,
+				820D98BF1E5A29C700CD5E36 /* AudioViewController.xib */,
 			);
 			path = Spoty;
 			sourceTree = "<group>";
@@ -176,6 +200,7 @@
 				820D98B71E59DBAD00CD5E36 /* TracksViewController.xib in Resources */,
 				82875A0C1E56430E003B34FD /* WebViewController.xib in Resources */,
 				828759FF1E5627CD003B34FD /* HomeViewController.xib in Resources */,
+				820D98C11E5A29C700CD5E36 /* AudioViewController.xib in Resources */,
 				821330EF1E57835100F4C451 /* DeconnexionViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -189,6 +214,7 @@
 			files = (
 				820D98B61E59DBAD00CD5E36 /* TracksViewController.m in Sources */,
 				828759E61E5620D7003B34FD /* AppDelegate.m in Sources */,
+				820D98C01E5A29C700CD5E36 /* AudioViewController.m in Sources */,
 				82875A0B1E56430E003B34FD /* WebViewController.m in Sources */,
 				821330EE1E57835100F4C451 /* DeconnexionViewController.m in Sources */,
 				828759E31E5620D7003B34FD /* main.m in Sources */,
