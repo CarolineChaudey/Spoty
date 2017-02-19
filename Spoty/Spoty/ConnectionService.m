@@ -7,50 +7,31 @@
 //
 
 #import "ConnectionService.h"
+#import "AppDelegate.h"
 
 @implementation ConnectionService
 
 NSString *CLIENT_SECRET = @"8fce6078db874efaaf6d17412cf9a95c";
 NSString *CLIENT_ID = @"830c60285d82492dab749e02b5864c5e";
 NSString *REDIRECT_URI = @"spoty://oauth/callback";
-static NSString *code = nil;
-static NSString *token = nil;
-static NSString *refresh_token = nil;
 static NSMutableDictionary *playlist = nil;
 
-
-+ (NSString*) code {
-    return code;
-}
-+ (NSString*) token {
-    return token;
-}
-+ (NSString*) refresh_token {
-    return refresh_token;
-}
-
-+ (void) setCode:(NSString*)nCode {
-    code = nCode;
-}
-+ (void) setToken:(NSString*)nToken {
-    token = nToken;
-}
-+ (void) setRefresh_token:(NSString*)nRefresh_token {
-    refresh_token = nRefresh_token;
-}
+@synthesize code = code_;
+@synthesize token = token_;
+@synthesize refreshToken = refreshToken_;
 
 
-+ (NSString*) CLIENT_SECRET {
+- (NSString*) CLIENT_SECRET {
     return CLIENT_SECRET;
 }
-+ (NSString*) CLIENT_ID {
+- (NSString*) CLIENT_ID {
     return CLIENT_ID;
 }
-+ (NSString*) REDIRECT_URI {
+- (NSString*) REDIRECT_URI {
     return REDIRECT_URI;
 }
 
-+ (NSString*)getCodeFrom:(NSURL*)url {
+- (NSString*)getCodeFrom:(NSURL*)url {
     // récupérer les paramètres de l'URL
     NSArray *queryParams = [[url query] componentsSeparatedByString:@"&"];
     NSArray *codeParam = [queryParams filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF BEGINSWITH %@", @"code="]];
@@ -61,7 +42,7 @@ static NSMutableDictionary *playlist = nil;
 }
 
 
-+ (NSData*)encodeDictionary:(NSDictionary*)dictionary {
+- (NSData*)encodeDictionary:(NSDictionary*)dictionary {
     // chaque paramètre du dictionnaire est mis dans une list sous la forme "clef=valeur"
     NSMutableArray *parts = [[NSMutableArray alloc] init];
     for (NSString *key in dictionary) {
@@ -77,10 +58,11 @@ static NSMutableDictionary *playlist = nil;
 }
 
 
-+ (BOOL) setTokens:(AppDelegate*)appDelegate; {
-    if (nil == [self code]) {
+- (BOOL) setTokens:(AppDelegate*)appDelegate {
+    if (nil == self.code) {
         return NO;
     }
+    NSLog(@"Je suis dans setTokens");
     
     NSMutableURLRequest * request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"https://accounts.spotify.com/api/token"]];
     request.HTTPMethod = @"POST";
@@ -95,24 +77,19 @@ static NSMutableDictionary *playlist = nil;
     
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *requestBodyData, NSURLResponse *response, NSError *error) {
-        
+        NSLog(@"On a envoye la requete");
         if (!error){
             NSString *ret = [[NSString alloc] initWithData:requestBodyData encoding:NSUTF8StringEncoding];
-            NSLog(@"REST========>%@", ret);
+            NSLog(@"REPONSE POUR LES TOKENS========>%@", ret);
             
             // recuperer le token et resfresh_token dans un tableau
             NSArray *arrayToken = [ret componentsSeparatedByString:@":"];
             NSString *tokenType = [arrayToken objectAtIndex:1];
             NSArray *arrayT = [tokenType componentsSeparatedByString:@","];
-            //token_ = [arrayT objectAtIndex:0];
             [self setToken:[arrayT objectAtIndex:0]];
-            //refresh_token_ = [arrayToken objectAtIndex:4];
-            [self setRefresh_token:[arrayToken objectAtIndex:4]];
+            self.refreshToken = [arrayToken objectAtIndex:4];
             
-            NSLog(@"TOKEN=============>%@\n", [self token]);
-            NSLog(@"REFRESH-TOKEN=============>%@\n", [self refresh_token]);
-            
-            //[appDelegate accessApplication];
+            [appDelegate spotifyConnection];
         }
         else {
             NSLog(@"ERREUR POST TOKEN %@", error);
@@ -125,7 +102,7 @@ static NSMutableDictionary *playlist = nil;
     
 }
 
-+(NSArray*) fetchSearchResultWith:(NSString*)keyWords AndType:(NSString*)type {
+-(NSArray*) fetchSearchResultWith:(NSString*)keyWords AndType:(NSString*)type {
     NSArray *results = [NSArray new];
     NSString *url = @"https://api.spotify.com/v1/search?q=";
     [url stringByAppendingString:keyWords];
@@ -146,69 +123,44 @@ static NSMutableDictionary *playlist = nil;
     return results;
 }
 
-- (void)featurePlaylist
-{
+- (void)featurePlaylist:(HomeViewController*)homeView {
     NSLog(@"je suis dans featured ====> ");
     NSString *urlFearture = @"https://api.spotify.com/v1/browse/featured-playlists";
     
     NSURL *url = [NSURL URLWithString:urlFearture];
-    
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     
     
-    NSString *headersAuth = [NSString stringWithFormat:@"Bearer %@", token];
-    
+    NSString *headersAuth = [NSString stringWithFormat:@"Bearer %@", [self.token stringByReplacingOccurrencesOfString:@"\"" withString:@""]];
+    //NSLog(@"TOKEN RECUPERE = %@", [headersAuth stringByReplacingOccurrencesOfString:@"\"" withString:@""]);
     
     [urlRequest setValue:headersAuth forHTTPHeaderField:@"Authorization"];
+    //NSLog(@"URL HEADER ENVOYEE : %@", urlRequest.allHTTPHeaderFields);
     
-    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-    [NSURLConnection sendAsynchronousRequest:urlRequest queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-        if (error)
-        {
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:urlRequest completionHandler:^(NSData *requestBodyData, NSURLResponse *response, NSError *error) {
+        if (error) {
             NSLog(@"ERROR FEATURE PLAYLIST");
         }
-        else
-        {
+        else {
             NSError *err = nil;
-            NSDictionary *jsonResult = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&err];
+            NSDictionary *jsonResult = [NSJSONSerialization JSONObjectWithData:requestBodyData options:NSJSONReadingAllowFragments error:&err];
             
-            NSLog(@"REST========>%@", jsonResult);
-            /*NSString *rets = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];*/
-            //NSLog(@"REST========>%@", jsonResult);
+            //NSLog(@"REST========>%@", [jsonResult objectForKey:@"message"]);
             
             if( !err && [jsonResult objectForKey:@"playlists"] ) {
-                NSArray *list  = [[jsonResult objectForKey:@"playlists"] objectForKey:@"items"];
-                NSMutableDictionary *playlist = [[NSMutableDictionary alloc] init];
-                //for (NSDictionary *playlistObj in list) {
-                //NSError *error=nil;
-                //if(!error) {
-                // [results addObject:playlist];
-                
-                //   NSLog(@"PPPPPP=======> %@", playlistObj);
-                //NSLog(@"%@ lisst==>", list);
-                /*   NSLog(@"IIIIMMMMMMMMAAGGESS ==> %@, nnnaammmee ===> %@, traakkk ===> %@", [list valueForKey:@"images"], [list valueForKey:@"name"], [list valueForKey:@"tracks"]);*/
-                [playlist setObject:[list valueForKey:@"images"] forKey:@"image"];
-                [playlist setObject:[list valueForKey:@"name"] forKey:@"name"];
-                [playlist setObject:[list valueForKey:@"tracks"] forKey:@"tracks"];
-                
-                
-                //image = [list valueForKey:@"images"];
-                // NSLog(@"RESSUULLTTT =====> %@", [result[0] objectForKey:@"name"]);
-                //return (result);
-                //  NSArray *arrayT  = [[jsonResult objectForKey:@"name"]
-                
-                
-                //NSString* revname = [result componentsJoinedByString:@", "];
-                //NSLog(@"%@", err);
-                //    }
-                // }
-            }
+                 NSArray *list  = [[jsonResult objectForKey:@"playlists"] objectForKey:@"items"];
+                 NSMutableDictionary *playlist = [[NSMutableDictionary alloc] init];
+             
+                 [playlist setObject:[list valueForKey:@"images"] forKey:@"image"];
+                 [playlist setObject:[list valueForKey:@"name"] forKey:@"name"];
+                 [playlist setObject:[list valueForKey:@"tracks"] forKey:@"tracks"];
+                 //NSLog(@"PLAYSLIST DICT : %@", playlist);
+                [homeView receivePlaylists:playlist];
+             }
         }
     }];
-    
-    /*   NSData * imageData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: @"http://myurl/mypic.jpg"]];
-     cell.image = [UIImage imageWithData: imageData];
-     [imageData release];*/
+    [task resume];
 }
 
 @end

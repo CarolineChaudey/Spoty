@@ -9,9 +9,9 @@
 #import "AppDelegate.h"
 #import "HomeViewController.h"
 #import "SearchViewController.h"
-#import "ConnectionService.h"
 #import "WebViewController.h"
 #import "DeconnexionViewController.h"
+#import "ConnectionService.h"
 
 @interface AppDelegate ()
 
@@ -22,9 +22,12 @@
 @synthesize menuCtrl = menuCtrl_;
 @synthesize wvc = wvc_;
 @synthesize oauthView  = oauthView_;
+@synthesize coService = coService_;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
+    self.coService = [ConnectionService new];
+    
     // on prepare la fenetre
     CGRect screenRect = [UIScreen mainScreen].bounds;
     self.window = [[UIWindow alloc] initWithFrame:screenRect];
@@ -39,11 +42,23 @@
     [self.oauthView loadRequest:request];
     self.wvc = [[WebViewController alloc] init];
     
-    [self spotifyConnection];
+    [self displayWebView];
     
     return YES;
 }
-
+/*
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context{
+    NSLog(@"La valeur de token a changee");
+    [self spotifyConnection];
+}
+*/
+-(void)displayWebView {
+    NSLog(@"displayWebView");
+    [self.oauthView setDelegate:self.wvc];
+    [self.wvc.view addSubview:self.oauthView];
+    self.window.rootViewController = self.wvc;
+    [self.window makeKeyAndVisible];
+}
 
 -(void)spotifyConnection {
     
@@ -51,6 +66,7 @@
     HomeViewController *homeCtrl = [HomeViewController new];
     SearchViewController *searchCtrl = [SearchViewController new];
     DeconnexionViewController *decoCtrl = [DeconnexionViewController new];
+    NSLog(@"Les 3 options sont creees");
     
     // on créé le menu et on le remplit avec les "vues"
     self.menuCtrl = [[UITabBarController alloc] init];
@@ -61,11 +77,8 @@
     [[self.menuCtrl.tabBar items] objectAtIndex:1].title = @"Search";
     [[self.menuCtrl.tabBar items] objectAtIndex:2].title = @"Quit";
     
-    [self.oauthView setDelegate:self.wvc];
-    [self.wvc.view addSubview:self.oauthView];
-    self.window.rootViewController = self.wvc;
-    [self.window makeKeyAndVisible];
-
+    //NSLog(@"On tente le main thread");
+    [self performSelectorOnMainThread:@selector(accessApplication) withObject:nil waitUntilDone:NO];
 }
 
 - (BOOL)accessApplication {
@@ -80,68 +93,17 @@
 
 // "attrape" la réponse de l'API, agit comme une route dans une application web
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
-    
     NSLog(@"On a renvoyé une réponse ---------------------->: %@", url);
-    NSString *strURL = url.absoluteString; // plus pratique pour la manipulation
     
-    if ([strURL rangeOfString:@"spoty://oauth/callback?code="].location != NSNotFound) {
-        [ConnectionService setCode:[ConnectionService getCodeFrom:url]];
-        [ConnectionService setTokens:self];
-        [self accessApplication];
+    if ([url.absoluteString rangeOfString:@"spoty://oauth/callback?code="].location != NSNotFound) {
+        [self.coService setCode:[self.coService getCodeFrom:url]];
+        [self.coService setTokens:self];
+        // attendre que  le token ai changé
         
         return YES;
     }
     return NO;
 }
-
-
-/*-(void)fetchFeaturedPlaylists:(NSDictionary*)options completion:(void (^)(id results, NSError* error))completion {
- 
- NSString *apiUrl = @"https://api.spotify.com/v1/browse/featured-playlists";
- if(options) {
- //NSString *qs = [[MXMUtil sharedInstance] queryStringFromDictionary:options];
- 
- //NSString *qs = [[MXMUtil sharedInstance] queryStringFromDictionary:options];
- 
- 
- apiUrl = [apiUrl stringByAppendingString:qs];
- }
- NSURL *url = [NSURL URLWithString:apiUrl];
- 
- NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
- NSString *headersAuth = [NSString stringWithFormat:@"Bearer %@",token_];
- [urlRequest setValue:headersAuth forHTTPHeaderField:@"Authorization"];
- 
- NSOperationQueue *queue = [[NSOperationQueue alloc] init];
- [NSURLConnection sendAsynchronousRequest:urlRequest queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
- 
- if (error) {
- completion(nil,error);
- }
- else {
- NSError *err=nil;
- NSDictionary *jsonResult = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&err];
- if( !err && [jsonResult objectForKey:@"playlists"] ) {
- NSArray *list  = [[jsonResult objectForKey:@"playlists"] objectForKey:@"items"];
- NSMutableArray *results = [[NSMutableArray alloc] init];
- for (NSDictionary *playlistObj in list) {
- NSError *error=nil;
- SPTPlaylistSnapshot *playlist = [[SPTPlaylistSnapshot alloc] initWithDecodedJSONObject:playlistObj error:&error];
- if(!error) {
- // [results addObject:playlist];
- NSLog(@"Hello\n");
- }
- }
- completion(results,nil);
- } else {
- completion(nil,err);
- }
- }
- }];
- }*/
-
-
-
 
 -(NSString*)getCodeFrom:(NSURL*)url {
     // récupérer les paramètres de l'URL
