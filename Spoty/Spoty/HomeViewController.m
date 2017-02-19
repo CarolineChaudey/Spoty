@@ -8,6 +8,7 @@
 
 #import "HomeViewController.h"
 #import "AppDelegate.h"
+#import "TracksViewController.h"
 
 @interface HomeViewController ()
 
@@ -62,10 +63,27 @@
     NSString *playName = [[self.playlists objectForKey:@"name"] objectAtIndex:indexPath.row];
     NSString *playNumber = [[[self.playlists objectForKey:@"tracks"] objectAtIndex:indexPath.row] objectForKey:@"total"];
     cell.textLabel.text = [NSString stringWithFormat:@"%@ : %@ morceaux", playName, playNumber];
-    //[cell.textLabel.text stringByAppendingString:@" : %@ tracks", [[self.playlists objectForKey:@"tracks"] objectForKey:@"total"]];
-    //NSLog(@"On fait la ligne : %d", indexPath.row);
     
     return cell;
 }
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //[self performSegueWithIdentifier:@"ShowDetail" sender:tableView];
+    NSString *playName = [[self.playlists objectForKey:@"name"] objectAtIndex:indexPath.row];
+    NSLog(@"On a cliqué sur : %@", playName);
+    
+    //on passe à la vue suivante
+    TracksViewController *tracksView = [TracksViewController new];
+    [self.view addSubview:tracksView.view];
+    //self.view.userInteractionEnabled = FALSE;
+}
+
+- (IBAction)clickReturn:(id)sender {
+    NSLog(@"On demande le retour dans le parent");
+    
+}
+
 
 @end

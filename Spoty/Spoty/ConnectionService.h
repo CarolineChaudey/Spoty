@@ -38,4 +38,5 @@ extern const NSString *REDIRECT_URI;
 - (NSArray*) fetchSearchResultWith:(NSString*)keyWords AndType:(NSString*)type;
 - (void)featurePlaylist:(HomeViewController*)homeView;
 
+
 @end
